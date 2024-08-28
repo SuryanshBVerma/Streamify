@@ -7,7 +7,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage
-} from '@/components/ui/Form';
+} from '@/components/ui/form';
 
 import { Input } from '@/components/ui/Input'; // Adjust the path to your input component
 import { useForm } from 'react-hook-form';
