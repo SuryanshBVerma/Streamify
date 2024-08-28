@@ -1,10 +1,7 @@
 'use client';
-
-
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { TrendingUp } from 'lucide-react';
-import { Label, Pie, PieChart } from 'recharts';
-
+import { Label, Pie, PieChart, Cell } from 'recharts';
 import {
   Card,
   CardContent,
@@ -18,49 +15,61 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' }
-];
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-const chartConfig = {
-  visitors: {
-    label: 'Visitors'
-  },
-  chrome: {
-    label: 'Chrome',
-    color: 'hsl(var(--chart-1))'
-  },
-  safari: {
-    label: 'Safari',
-    color: 'hsl(var(--chart-2))'
-  },
-  firefox: {
-    label: 'Firefox',
-    color: 'hsl(var(--chart-3))'
-  },
-  edge: {
-    label: 'Edge',
-    color: 'hsl(var(--chart-4))'
-  },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-5))'
-  }
+const fetchRevenueData = async () => {
+  // Simulating a fetch from a JSON file
+  return [
+    { source: 'Subscriptions', revenue: 275000, fill: 'hsl(var(--chart-1))' },
+    { source: 'Ads', revenue: 200000, fill: 'hsl(var(--chart-2))' },
+    { source: 'One-time Purchases', revenue: 150000, fill: 'hsl(var(--chart-3))' },
+    { source: 'Partnerships', revenue: 100000, fill: 'hsl(var(--chart-4))' },
+    { source: 'Other', revenue: 75000, fill: 'hsl(var(--chart-5))' }
+  ];
 };
 
 export function PieGraph() {
-  const totalVisitors = useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+  const [chartData, setChartData] = useState([]);
+  const [selectedSource, setSelectedSource] = useState(null);
+
+  useEffect(() => {
+    fetchRevenueData().then(setChartData);
   }, []);
+
+  const totalRevenue = useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.revenue, 0);
+  }, [chartData]);
+
+  const chartConfig = useMemo(() => {
+    const config = {
+      revenue: { label: 'Revenue' }
+    };
+    chartData.forEach(item => {
+      config[item.source] = {
+        label: item.source,
+        color: item.fill
+      };
+    });
+    return config;
+  }, [chartData]);
+
+  const handlePieClick = (entry) => {
+    setSelectedSource(entry.source);
+  };
+
+  const filteredData = selectedSource ? chartData.filter(item => item.source === selectedSource) : chartData;
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
+        <CardTitle>Revenue Distribution</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -75,11 +84,16 @@ export function PieGraph() {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="revenue"
+              nameKey="source"
               innerRadius={60}
               strokeWidth={5}
+              onClick={handlePieClick}
+              className='cursor-pointer'
             >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -95,14 +109,14 @@ export function PieGraph() {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalVisitors.toLocaleString()}
+                          ${(totalRevenue / 1000000).toFixed(2)}M
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Total Revenue
                         </tspan>
                       </text>
                     );
@@ -115,12 +129,32 @@ export function PieGraph() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Revenue up by 8.7% this quarter <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing revenue distribution for the last 6 months
         </div>
       </CardFooter>
+      <CardContent>
+
+        <Table className="border">
+          <TableHeader className="bg-muted">
+            <TableRow>
+              <TableHead>Source</TableHead>
+              <TableHead className="text-right">Revenue</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredData.map((item) => (
+              <TableRow key={item.source}>
+                <TableCell>{item.source}</TableCell>
+                <TableCell className="text-right">${item.revenue.toLocaleString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+      </CardContent>
     </Card>
   );
 }

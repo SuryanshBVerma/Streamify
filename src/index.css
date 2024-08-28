@@ -67,3 +67,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+::-webkit-scrollbar {
+  width: 12px;              
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;    
+  border-radius: 10px;       
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(133, 132, 132, 0.3); 
+  border-radius: 30px;                 
+  border: 3px solid transparent;       
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(207, 201, 201, 0.5); 
+}
+
+* {
+  scrollbar-width: thin;             
+  scrollbar-color: rgba(215, 213, 213, 0.3) transparent; 
+}
