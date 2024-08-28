@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -10,7 +9,6 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
-import { User } from 'lucide-react';
 import { useSelector } from 'react-redux';
 
 

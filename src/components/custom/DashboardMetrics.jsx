@@ -13,7 +13,7 @@ import { AreaGraph } from '../ui/charts/AreaGraph';
 import { PieGraph } from '../ui/charts/PieGraph';
 
 import { Activity, CreditCard, DollarSign, Users } from 'lucide-react';
-import { TopArtists } from './TopArtists.JSX';
+import { TopArtists } from './TopArtists.jsx';
 import RecentStreams from './RecentStreams';
 
 export default function Page() {
