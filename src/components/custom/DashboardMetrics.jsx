@@ -8,9 +8,9 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BarGraph } from '../ui/charts/BarGraph';
-import { AreaGraph } from '../ui/charts/AreaGraph';
-import { PieGraph } from '../ui/charts/PieGraph';
+import { BarGraph } from '@/components/ui/charts/BarGraph.jsx';
+import { AreaGraph } from '@/components/ui/charts/AreaGraph.jsx';
+import { PieGraph } from '@/components/ui/charts/PieGraph.jsx';
 
 import { Activity, CreditCard, DollarSign, Users } from 'lucide-react';
 import { TopArtists } from './TopArtists.jsx';
