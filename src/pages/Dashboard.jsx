@@ -20,10 +20,6 @@ const Dashboard = () => {
 
         <nav className='p-6 flex justify-between border-b mb-4'>
           <div>
-
-            {/* <h1 className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight">Welcome,
-              <span className='first-letter:capitalize'> {name} 👋 </span>
-            </h1> */}
             <h2 className="text-2xl font-bold tracking-tight">
               Hi, Welcome {capitalize(name)}👋
             </h2>
