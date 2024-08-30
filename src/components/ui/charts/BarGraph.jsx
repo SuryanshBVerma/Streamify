@@ -18,10 +18,7 @@ import {
 
 export const description = 'Top Genres by Streams';
 
-// Simulated fetch function (replace with actual fetch in real application)
 const fetchGenreData = async () => {
-  // Simulating API delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
   return [
     { genre: "Pop", streams: 5000000 },
     { genre: "Hip Hop", streams: 4500000 },
@@ -66,9 +63,7 @@ export function BarGraph() {
     return chartData.reduce((acc, curr) => acc + curr.streams, 0);
   }, [chartData]);
 
-  if (loading) {
-    return <div>Loading chart data...</div>;
-  }
+
 
   return (
     <Card className="h-full">

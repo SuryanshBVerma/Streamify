@@ -28,8 +28,7 @@ const Sidebar = () => {
     { icon: User, label: 'User' },
     { icon: Users, label: 'Employee' },
     { icon: UserCircle, label: 'Profile' },
-    { icon: Trello, label: 'Kanban' },
-    { icon: LogIn, label: 'Login' },
+    { icon: LogIn, label: 'Logout' },
   ];
 
   return (
