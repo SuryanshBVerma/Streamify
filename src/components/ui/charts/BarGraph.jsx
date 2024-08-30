@@ -19,6 +19,8 @@ import {
 export const description = 'Top Genres by Streams';
 
 const fetchGenreData = async () => {
+
+  // await new Promise(resolve => setTimeout(resolve, 1500));
   return [
     { genre: "Pop", streams: 5000000 },
     { genre: "Hip Hop", streams: 4500000 },
@@ -65,6 +67,7 @@ export function BarGraph() {
 
 
 
+
   return (
     <Card className="h-full">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
@@ -86,11 +89,13 @@ export function BarGraph() {
         </div>
       </CardHeader>
 
+      
       <CardContent className="px-2 sm:p-6 mt-8">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[280px] w-full"
         >
+          
           <BarChart
             accessibilityLayer
             data={chartData}
